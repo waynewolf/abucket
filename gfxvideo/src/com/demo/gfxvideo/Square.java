@@ -37,6 +37,8 @@ public class Square {
     private final FloatBuffer vertexBuffer;
     private final ShortBuffer drawListBuffer;
     private float[] mVertexArray;
+    private int mVBO;
+    private int mIBO;
     private final int mProgram;
     private int mPositionHandle;
     private int mUVHandle;
@@ -117,6 +119,19 @@ public class Square {
         drawListBuffer.put(drawOrder);
         drawListBuffer.position(0);
 
+		int[] bufferObject = new int[2];
+		GLES20.glGenBuffers(2, bufferObject, 0);
+		mVBO = bufferObject[0];
+		mIBO = bufferObject[1];
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVBO);
+		vertexBuffer.position(0);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, mVertexArray.length * 4,
+				vertexBuffer, GLES20.GL_STATIC_DRAW);
+		
+		GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, mIBO);
+		GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, drawOrder.length * 2,
+				drawListBuffer, GLES20.GL_STATIC_DRAW);
+		
         int vertexShader = MyGLRenderer.loadShader(
                 GLES20.GL_VERTEX_SHADER,
                 vertexShaderCode);
@@ -137,17 +152,18 @@ public class Square {
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "aPosition");
         mUVHandle = GLES20.glGetAttribLocation(mProgram, "aUV");
         
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, mIBO);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVBO);
         GLES20.glEnableVertexAttribArray(mPositionHandle);
-        vertexBuffer.position(0);
         GLES20.glVertexAttribPointer(
                 mPositionHandle, POS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
-                vertexStride, vertexBuffer);
+                vertexStride, 0);
         
 		GLES20.glEnableVertexAttribArray(mUVHandle);
         vertexBuffer.position(POS_PER_VERTEX);
 		GLES20.glVertexAttribPointer(mUVHandle, UV_PER_VERTEX, GLES20.GL_FLOAT,
-				false, vertexStride, vertexBuffer);
+				false, vertexStride, 12);
 		
 		mTexHandle = GLES20.glGetUniformLocation(mProgram, "sTex");
 		mTexture.bind(GLES20.GL_TEXTURE0);
@@ -161,10 +177,13 @@ public class Square {
 
         GLES20.glDrawElements(
                 GLES20.GL_TRIANGLES, drawOrder.length,
-                GLES20.GL_UNSIGNED_SHORT, drawListBuffer);
+                GLES20.GL_UNSIGNED_SHORT, 0);
 
         GLES20.glDisableVertexAttribArray(mPositionHandle);
-		GLES20.glDisableVertexAttribArray(mUVHandle);		
+		GLES20.glDisableVertexAttribArray(mUVHandle);
+		
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		mTexture.unbind();
     }
 
