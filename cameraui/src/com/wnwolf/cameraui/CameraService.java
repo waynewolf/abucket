@@ -176,6 +176,7 @@ public class CameraService extends Service {
 		Log.d(TAG, "CameraService.onDestroy");
 		if(mCamera != null) {
 			mCamera.stopPreview();
+			mCamera.setPreviewCallbackWithBuffer(null);
 			mCamera.release();
 			mCamera = null;
         }
