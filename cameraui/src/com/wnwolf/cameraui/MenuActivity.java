@@ -7,10 +7,12 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MenuActivity extends Activity implements View.OnClickListener
 {
@@ -58,11 +60,15 @@ public class MenuActivity extends Activity implements View.OnClickListener
 		switch (v.getId()) {
 		    case R.id.button1:
 				if(!cameraStarted) {
-					if(startService(new Intent(this, CameraService.class)) != null) {
-						cameraStarted = true;
-					startCameraButton.setText("Stop Camera");
+					if(Camera.getNumberOfCameras() > 0) {
+						if(startService(new Intent(this, CameraService.class)) != null) {
+							cameraStarted = true;
+							startCameraButton.setText("Stop Camera");
+						} else {
+							Log.w(TAG, "start camera service failed");
+						}
 					} else {
-						Log.w(TAG, "start camera service failed");
+						Toast.makeText(this, "No camera found", Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					boolean stopSuccess = stopService(new Intent(this, CameraService.class));

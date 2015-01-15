@@ -18,17 +18,18 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class CameraService extends Service {
 	private static final String TAG = "CameraUI";
 
-    private NotificationManager mNM;
+    private NotificationManager mNM = null;
     private int NOTIFICATION = 0xaabbcc;
 
     private WindowManager mWindowManager;
-    private Camera mCamera;
-    private CameraPreview mPreview;
-    private CameraDrawer mDrawer;
+    private Camera mCamera = null;
+    private CameraPreview mPreview = null;
+    private CameraDrawer mDrawer = null;
 
 	private RelativeLayout mLayout;
 
@@ -144,20 +145,15 @@ public class CameraService extends Service {
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
 				PixelFormat.TRANSLUCENT);
 
-		Log.d(TAG, "CameraSerivce.onCreate flating");
-		mLayout = (RelativeLayout)(
-					(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-						.inflate(R.layout.cameraui_activity, null);
 		mCamera = Camera.open(0);
-		if(mCamera == null) {
-			Log.e(TAG, "CameraSerivce: Cannot open camera");
-			stopSelf();
-			return;
-		}
+		mLayout = (RelativeLayout)(
+				(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+					.inflate(R.layout.cameraui_activity, null);
 		mDrawer = (CameraDrawer)mLayout.findViewById(R.id.camera_drawer);
 		mCamera.setPreviewCallbackWithBuffer(mPreviewCallback);
 
 		mPreview = new CameraPreview(this, mCamera);
+
 		mLayout.addView(mPreview, 0, new RelativeLayout.LayoutParams(1, 1));
 		mWindowManager.addView(mLayout, layoutParams);
 
@@ -180,9 +176,12 @@ public class CameraService extends Service {
 			mCamera.release();
 			mCamera = null;
         }
-        mLayout.removeView(mPreview);
-        mWindowManager.removeView(mLayout);
-        mNM.cancel(NOTIFICATION);
+		if (mPreview != null)
+			mLayout.removeView(mPreview);
+		if (mLayout != null)
+			mWindowManager.removeView(mLayout);
+		if (mNM != null)
+			mNM.cancel(NOTIFICATION);
     }
 
     private void showNotification() {
