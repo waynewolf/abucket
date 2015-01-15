@@ -1,4 +1,6 @@
-package com.demo;
+package com.wnwolf.cameraui;
+
+import com.wnwolf.cameraui.R;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -18,7 +20,7 @@ import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 public class CameraService extends Service {
-	private static final String TAG = "TransPhone";
+	private static final String TAG = "CameraUI";
 
     private NotificationManager mNM;
     private int NOTIFICATION = 0xaabbcc;
@@ -127,7 +129,7 @@ public class CameraService extends Service {
 
     @Override
     public void onCreate() {
-		Log.d(TAG, "CameraService.onCreate entry");
+		Log.d(TAG, "CameraService.onCreate");
 
 		mWindowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
 		if(mWindowManager == null){
@@ -145,7 +147,7 @@ public class CameraService extends Service {
 		Log.d(TAG, "CameraSerivce.onCreate flating");
 		mLayout = (RelativeLayout)(
 					(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-						.inflate(R.layout.transparent_activity, null);
+						.inflate(R.layout.cameraui_activity, null);
 		mCamera = Camera.open(0);
 		if(mCamera == null) {
 			Log.e(TAG, "CameraSerivce: Cannot open camera");
@@ -195,9 +197,9 @@ public class CameraService extends Service {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification notification = new Notification.Builder(this)
-			.setContentTitle("Transparent Phone")
+			.setContentTitle("Camera UI")
 			.setContentText("Click to control the camera")
-			.setSmallIcon(R.drawable.notification_icon)
+			.setSmallIcon(R.drawable.ic_launcher)
 			.setLargeIcon(null)
 			.setContentIntent(pendingIntent)
 			.build();

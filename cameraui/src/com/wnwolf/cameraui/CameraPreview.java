@@ -1,4 +1,4 @@
-package com.demo;
+package com.wnwolf.cameraui;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback{
-	private static final String TAG = "TransPhone";
+	private static final String TAG = "CameraUI";
 	private Camera mCamera = null;
 	private byte[] mData = null;
 	private int mWidth, mHeight;

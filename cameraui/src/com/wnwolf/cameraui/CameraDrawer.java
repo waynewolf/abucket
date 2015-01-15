@@ -1,4 +1,4 @@
-package com.demo;
+package com.wnwolf.cameraui;
 
 import android.content.Context;
 import android.graphics.Bitmap;

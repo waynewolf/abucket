@@ -1,4 +1,6 @@
-package com.demo;
+package com.wnwolf.cameraui;
+
+import com.wnwolf.cameraui.R;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -12,14 +14,13 @@ import android.widget.Button;
 
 public class MenuActivity extends Activity implements View.OnClickListener
 {
-	private static final String TAG = "TransPhone";
+	private static final String TAG = "CameraUI";
 	boolean cameraStarted = false;
     Button startCameraButton = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-		Log.d(TAG, "MenuActivity.onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_activity);
         startCameraButton = (Button)findViewById(R.id.button1);
@@ -28,7 +29,6 @@ public class MenuActivity extends Activity implements View.OnClickListener
 
 	@Override
 	protected void onResume() {
-		Log.d(TAG, "MenuActivity.onResume()");
 		super.onResume();
 
 		cameraStarted = isServiceRunning(CameraService.class);
@@ -40,7 +40,6 @@ public class MenuActivity extends Activity implements View.OnClickListener
 
 	@Override
 	protected void onDestroy() {
-		Log.d(TAG, "MenuActivity.onDestroy()");
 		super.onDestroy();
 	}
 
