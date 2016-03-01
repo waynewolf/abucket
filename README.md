@@ -1,4 +1,4 @@
 abucket
 =======
 
-android apks written by myself to debug graphics driver
+android aps to debug gfx driver and other toy projects
