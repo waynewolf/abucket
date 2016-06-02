@@ -26,6 +26,6 @@ LOCAL_SHARED_LIBRARIES := \
 	libGLESv2 \
 	libEGL
 LOCAL_MODULE := libmalisdk_common_native
-LOCAL_CFLAGS += -Wall -D__android__ -DGLES_VERSION=2 -fexceptions
+LOCAL_CFLAGS += -Wall -D__android__ -DGLES_VERSION=3 -fexceptions
 LOCAL_C_INCLUDES += $LOCAL_PATH
 include $(BUILD_SHARED_LIBRARY)

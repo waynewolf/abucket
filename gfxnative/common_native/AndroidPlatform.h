@@ -15,7 +15,9 @@
 #include <jni.h>
 #include <android/log.h>
 
+#ifndef  LOG_TAG //wayne
 #define  LOG_TAG    __FILE__
+#endif
 
 #define  LOGI(format, args...) { fprintf(stderr, format, ##args); __android_log_print(ANDROID_LOG_INFO,  LOG_TAG, format, ##args); }
 #define  LOGE(format, args...) { fprintf(stderr, format, ##args); __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, format, ##args); }
