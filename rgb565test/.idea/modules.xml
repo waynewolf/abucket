@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/VectorDrawableScaleTest.iml" filepath="$PROJECT_DIR$/VectorDrawableScaleTest.iml" />
+      <module fileurl="file:///Volumes/Data/rgb565test/app/app.iml" filepath="/Volumes/Data/rgb565test/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file:///Volumes/Data/rgb565test/rgb565test.iml" filepath="/Volumes/Data/rgb565test/rgb565test.iml" />
+    </modules>
+  </component>
+</project>
