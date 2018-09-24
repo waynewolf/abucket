@@ -27,3 +27,7 @@ proguard/
 
 .vscode
 .ipynb_checkpoints
+
+.idea
+.vcode
+cmake-*
